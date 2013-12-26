@@ -1,0 +1,33 @@
+{
+  "name": "passport-mediawiki-oauth",
+  "version": "0.1.0",
+  "description": "MediaWiki (OAuth) authentication strategies for Passport.",
+  "keywords": ["passport", "mediawiki", "auth", "authn", "authentication", "identity"],
+  "repository": {
+    "type": "git",
+    "url": "https://gerrit.wikimedia.org/r/#/admin/projects/passport-mediawiki"
+  },
+  "bugs": {
+    "url": "https://bugzilla.wikimedia.org/"
+  },
+  "author": {
+    "name": "Dan Andreescu"
+  },
+  "licenses": [ {
+    "type": "MIT",
+    "url": "http://www.opensource.org/licenses/MIT"
+  } ],
+  "main": "./lib/passport-mediawiki-oauth",
+  "dependencies": {
+    "pkginfo": "0.2.x",
+    "passport-oauth": "~0.1.4",
+    "jwt-simple": "*"
+  },
+  "devDependencies": {
+    "vows": "0.6.x"
+  },
+  "scripts": {
+    "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"
+  },
+  "engines": { "node": ">= 0.4.0" }
+}
