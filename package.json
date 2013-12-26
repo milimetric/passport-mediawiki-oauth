@@ -5,7 +5,7 @@
   "keywords": ["passport", "mediawiki", "auth", "authn", "authentication", "identity"],
   "repository": {
     "type": "git",
-    "url": "https://gerrit.wikimedia.org/r/#/admin/projects/passport-mediawiki"
+    "url": "https://git.wikimedia.org/git/passport-mediawiki.git"
   },
   "bugs": {
     "url": "https://bugzilla.wikimedia.org/"
@@ -24,7 +24,7 @@
     "jwt-simple": "*"
   },
   "devDependencies": {
-    "vows": "0.6.x"
+    "vows": "*"
   },
   "scripts": {
     "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"

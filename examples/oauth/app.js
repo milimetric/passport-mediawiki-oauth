@@ -1,13 +1,16 @@
 var express = require('express');
 var passport = require('passport');
 var util = require('util');
-var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
+// in a real applicaiton, just require('passport-mediawiki-oauth') and add
+// passport-mediawiki-oauth to dependencies in package.json
+var MediaWikiStrategy = require('../../../passport-mediawiki-oauth').OAuthStrategy;
 
 // API Access link for creating consumer key and secret:
-// https://developers.google.com/accounts/docs/RegistrationForWebAppsAuto
-// https://accounts.google.com/ManageDomains
-var GOOGLE_CONSUMER_KEY = '--insert-google-consumer-key-here--';
-var GOOGLE_CONSUMER_SECRET = '--insert-google-consumer-secret-here--';
+// https://www.mediawiki.org/wiki/Special:OAuthConsumerRegistration/propose
+// This example uses a develop-only consumer registered to work with localhost:5000
+var MEDIAWIKI_CONSUMER_KEY = 'd28ee52e069d0ef4fd362a710b5142d9';
+var MEDIAWIKI_CONSUMER_SECRET = '8ee2f3a9a8f6ba996db6a7750bc74a6b45c74f58';
+var MEDIAWIKI_CALLBACK_URL = 'http://localhost:5000/auth/mediawiki/callback';
 
 
 // Passport session setup.
@@ -15,8 +18,7 @@ var GOOGLE_CONSUMER_SECRET = '--insert-google-consumer-secret-here--';
 //   serialize users into and deserialize users out of the session.  Typically,
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.  However, since this example does not
-//   have a database of user records, the complete Google profile is
-//   serialized and deserialized.
+//   have a database of user records, the profile is serialized and deserialized.
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -26,22 +28,22 @@ passport.deserializeUser(function(obj, done) {
 });
 
 
-// Use the GoogleStrategy within Passport.
+// Use the MediaWikiStrategy within Passport.
 //   Strategies in passport require a `verify` function, which accept
-//   credentials (in this case, a token, tokenSecret, and Google profile), and
-//   invoke a callback with a user object.
-passport.use(new GoogleStrategy({
-    consumerKey: GOOGLE_CONSUMER_KEY,
-    consumerSecret: GOOGLE_CONSUMER_SECRET,
-    callbackURL: 'http://localhost:5000/auth/mw_meta'
+//   credentials (in this case, a token, tokenSecret, and MediaWiki profile),
+//   and invoke a callback with a user object.
+passport.use(new MediaWikiStrategy({
+    consumerKey: MEDIAWIKI_CONSUMER_KEY,
+    consumerSecret: MEDIAWIKI_CONSUMER_SECRET,
+    callbackURL: MEDIAWIKI_CALLBACK_URL
   },
   function(token, tokenSecret, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
       
-      // To keep the example simple, the user's Google profile is returned to
+      // To keep the example simple, the user's MediaWiki profile is returned to
       // represent the logged-in user.  In a typical application, you would want
-      // to associate the Google account with a user record in your database,
+      // to associate the MediaWiki account with a user record in your database,
       // and return that user instead.
       return done(null, profile);
     });
@@ -83,25 +85,25 @@ app.get('/login', function(req, res){
   res.render('login', { user: req.user });
 });
 
-// GET /auth/google
+// GET /login/meta_mw
 //   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in Google authentication will involve redirecting
-//   the user to google.com.  After authorization, Google will redirect the user
-//   back to this application at /auth/google/callback
-app.get('/auth/google',
-  passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }),
+//   request.  The first step in MediaWiki authentication will involve redirecting
+//   the user to mediawiki.  After authorization, MediaWiki will redirect the user
+//   back to this application at /auth/meta_mw
+app.get('/login/mediawiki',
+  passport.authenticate('mediawiki'),
   function(req, res){
-    // The request will be redirected to Google for authentication, so this
+    // The request will be redirected to MediaWiki for authentication, so this
     // function will not be called.
   });
 
-// GET /auth/google/callback
+// GET /auth/meta_mw
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+app.get('/auth/mediawiki/callback',
+  passport.authenticate('mediawiki', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
   });

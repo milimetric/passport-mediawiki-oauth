@@ -62,7 +62,11 @@ app.get('/auth/mediawiki/callback',
 
 ## Examples
 
-For a complete, working example, refer to the [OAuth 1.0 example](https://github.com/wikimedia/passport-mediawiki-oauth/tree/master/examples/oauth).
+For a complete, working example, refer to the [OAuth 1.0 example](https://git.wikimedia.org/blob/passport-mediawiki/HEAD/examples%2Foauth%2Fapp.js).  To get it up and running, you can do:
+
+    $ cd examples/oauth
+    $ npm install
+    $ node app.js
 
 ## Tests
 
