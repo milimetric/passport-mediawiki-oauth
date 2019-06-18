@@ -5,10 +5,10 @@
   "keywords": ["passport", "mediawiki", "auth", "authn", "authentication", "identity"],
   "repository": {
     "type": "git",
-    "url": "https://git.wikimedia.org/git/passport-mediawiki.git"
+    "url": "https://github.com/milimetric/passport-mediawiki-oauth.git"
   },
   "bugs": {
-    "url": "https://bugzilla.wikimedia.org/"
+    "url": "https://github.com/milimetric/passport-mediawiki-oauth/issues"
   },
   "author": {
     "name": "Dan Andreescu"
