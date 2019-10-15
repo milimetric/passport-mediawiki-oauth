@@ -3,7 +3,7 @@ var passport = require('passport');
 var util = require('util');
 // in a real applicaiton, just require('passport-mediawiki-oauth') and add
 // passport-mediawiki-oauth to dependencies in package.json
-var MediaWikiStrategy = require('../../../passport-mediawiki-oauth').OAuthStrategy;
+var MediaWikiStrategy = require('passport-mediawiki-oauth').OAuthStrategy;
 
 // API Access link for creating consumer key and secret:
 // https://www.mediawiki.org/wiki/Special:OAuthConsumerRegistration/propose
